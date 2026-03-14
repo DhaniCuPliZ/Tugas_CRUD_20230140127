@@ -1,112 +1,173 @@
-body{
-font-family: Arial, Helvetica, sans-serif;
-background: linear-gradient(135deg,#667eea,#764ba2);
-margin:0;
-padding:40px;
-color:#333;
+const API_URL = "http://localhost:8080/ktp";
+
+$(document).ready(function(){
+
+loadData();
+
+$("#ktpForm").submit(function(e){
+
+e.preventDefault();
+
+const id = $("#id").val();
+
+const data = {
+nomorKtp: $("#nomorKtp").val(),
+namaLengkap: $("#namaLengkap").val(),
+alamat: $("#alamat").val(),
+tanggalLahir: $("#tanggalLahir").val(),
+jenisKelamin: $("#jenisKelamin").val()
+};
+
+if(id){
+updateData(id,data);
+}else{
+createData(data);
 }
 
-.container{
-max-width:1100px;
-margin:auto;
+});
+
+});
+
+function loadData(){
+
+$.ajax({
+url:API_URL,
+type:"GET",
+
+success:function(res){
+
+let rows="";
+
+res.data.forEach(item=>{
+
+rows+=`
+<tr>
+<td>${item.id}</td>
+<td>${item.nomorKtp}</td>
+<td>${item.namaLengkap}</td>
+<td>${item.alamat}</td>
+<td>${item.tanggalLahir}</td>
+<td>${item.jenisKelamin}</td>
+<td>
+<button class="btn-edit" onclick="editData(${item.id})">Edit</button>
+<button class="btn-delete" onclick="deleteData(${item.id})">Delete</button>
+</td>
+</tr>
+`;
+
+});
+
+$("#dataTable").html(rows);
+
 }
 
-h1{
-text-align:center;
-color:white;
-margin-bottom:30px;
+});
+
 }
 
-.card{
-background:white;
-padding:25px;
-border-radius:10px;
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
-margin-bottom:30px;
+function createData(data){
+
+$.ajax({
+url:API_URL,
+type:"POST",
+contentType:"application/json",
+data:JSON.stringify(data),
+
+success:function(res){
+
+alert(res.message);
+
+resetForm();
+
+loadData();
+
+},
+
+error:function(){
+alert("Terjadi error");
 }
 
-.card h2{
-margin-top:0;
-margin-bottom:20px;
+});
+
 }
 
-.form-group{
-margin-bottom:15px;
+function editData(id){
+
+$.ajax({
+
+url:API_URL+"/"+id,
+type:"GET",
+
+success:function(res){
+
+const data=res.data;
+
+$("#id").val(data.id);
+$("#nomorKtp").val(data.nomorKtp);
+$("#namaLengkap").val(data.namaLengkap);
+$("#alamat").val(data.alamat);
+$("#tanggalLahir").val(data.tanggalLahir);
+$("#jenisKelamin").val(data.jenisKelamin);
+
 }
 
-label{
-display:block;
-font-weight:bold;
-margin-bottom:5px;
+});
+
 }
 
-input,select{
-width:100%;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-font-size:14px;
+function updateData(id,data){
+
+$.ajax({
+
+url:API_URL+"/"+id,
+type:"PUT",
+contentType:"application/json",
+data:JSON.stringify(data),
+
+success:function(res){
+
+alert(res.message);
+
+resetForm();
+
+loadData();
+
 }
 
-input:focus,select:focus{
-outline:none;
-border-color:#667eea;
+});
+
 }
 
-button{
-padding:10px 18px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-font-size:14px;
+function deleteData(id){
+
+if(confirm("Yakin ingin menghapus data?")){
+
+$.ajax({
+
+url:API_URL+"/"+id,
+type:"DELETE",
+
+success:function(res){
+
+alert(res.message);
+
+loadData();
+
 }
 
-.btn-primary{
-background:#4CAF50;
-color:white;
+});
+
 }
 
-.btn-primary:hover{
-background:#45a049;
 }
 
-.btn-cancel{
-background:#aaa;
-color:white;
-margin-left:10px;
-}
+function resetForm(){
 
-.btn-edit{
-background:#2196F3;
-color:white;
-padding:6px 10px;
-margin-right:5px;
-}
+$("#id").val("");
+$("#nomorKtp").val("");
+$("#namaLengkap").val("");
+$("#alamat").val("");
+$("#tanggalLahir").val("");
+$("#jenisKelamin").val("Laki-laki");
 
-.btn-delete{
-background:#f44336;
-color:white;
-padding:6px 10px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:10px;
-}
-
-th{
-background:#4CAF50;
-color:white;
-padding:10px;
-}
-
-td{
-padding:10px;
-border-bottom:1px solid #ddd;
-text-align:center;
-}
-
-tr:hover{
-background:#f5f5f5;
 }
