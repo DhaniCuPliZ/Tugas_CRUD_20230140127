@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="UTF-8">
-    <title>CRUD Data KTP</title>
+    <title>Sistem Data KTP</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -16,7 +16,7 @@
 
 <div class="container">
 
-    <h1>Sistem Data KTP</h1>
+    <h1>📄 Sistem Data KTP</h1>
 
     <div class="card">
 
@@ -26,36 +26,47 @@
 
             <input type="hidden" id="id">
 
-            <label>Nomor KTP</label>
-            <input type="text" id="nomorKtp" required>
+            <div class="form-group">
+                <label>Nomor KTP</label>
+                <input type="text" id="nomorKtp" required>
+            </div>
 
-            <label>Nama Lengkap</label>
-            <input type="text" id="namaLengkap" required>
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="namaLengkap" required>
+            </div>
 
-            <label>Alamat</label>
-            <input type="text" id="alamat" required>
+            <div class="form-group">
+                <label>Alamat</label>
+                <input type="text" id="alamat" required>
+            </div>
 
-            <label>Tanggal Lahir</label>
-            <input type="date" id="tanggalLahir" required>
+            <div class="form-group">
+                <label>Tanggal Lahir</label>
+                <input type="date" id="tanggalLahir" required>
+            </div>
 
-            <label>Jenis Kelamin</label>
-            <select id="jenisKelamin">
-                <option value="Laki-laki">Laki-laki</option>
-                <option value="Perempuan">Perempuan</option>
-            </select>
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <select id="jenisKelamin">
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
 
-            <br><br>
-
-            <button type="submit" class="btn-primary">Simpan</button>
-            <button type="button" onclick="resetForm()">Batal</button>
+            <div class="button-group">
+                <button type="submit" class="btn-primary">Simpan</button>
+                <button type="button" class="btn-cancel" onclick="resetForm()">Batal</button>
+            </div>
 
         </form>
 
     </div>
 
+
     <div class="card">
 
-        <h2>Daftar Data KTP</h2>
+        <h2>📋 Daftar Data KTP</h2>
 
         <table>
 
