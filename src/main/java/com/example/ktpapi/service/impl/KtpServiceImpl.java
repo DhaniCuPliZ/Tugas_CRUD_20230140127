@@ -73,7 +73,10 @@ public class KtpServiceImpl implements KtpService {
     @Override
     public void delete(Integer id) {
 
-        repository.deleteById(id);
+        Ktp entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Data tidak ditemukan"));
 
+        repository.delete(entity);
     }
 }
+
