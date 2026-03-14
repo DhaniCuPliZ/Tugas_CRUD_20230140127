@@ -7,9 +7,9 @@ public interface KtpService {
 
     KtpDto create(KtpDto dto);
 
-    List<KtpDto> findAll();
+    List<KtpDto> getAll();
 
-    KtpDto findById(Integer id);
+    KtpDto getById(Integer id);
 
     KtpDto update(Integer id, KtpDto dto);
 

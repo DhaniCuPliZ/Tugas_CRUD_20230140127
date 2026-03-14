@@ -13,14 +13,17 @@ public class Ktp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(name = "nomor_ktp", unique = true)
     private String nomorKtp;
 
+    @Column(name = "nama_lengkap")
     private String namaLengkap;
 
     private String alamat;
 
+    @Column(name = "tanggal_lahir")
     private Date tanggalLahir;
 
+    @Column(name = "jenis_kelamin")
     private String jenisKelamin;
 }
