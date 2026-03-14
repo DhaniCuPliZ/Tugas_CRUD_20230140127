@@ -21,4 +21,9 @@ public class KtpController {
         return service.create(dto);
     }
 
+    @GetMapping
+    public List<KtpDto> getAll(){
+        return service.findAll();
+    }
+
 }
