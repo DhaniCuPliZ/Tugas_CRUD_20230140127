@@ -1,1 +1,0 @@
-Apliasi Berjalan
