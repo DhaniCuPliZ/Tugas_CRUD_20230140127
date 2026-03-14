@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>CRUD Data KTP</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>CRUD Data KTP</h1>
+
+    <div class="form-box">
+
+        <input type="hidden" id="id">
+
+        <label>Nomor KTP</label>
+        <input type="text" id="nomorKtp">
+
+        <label>Nama Lengkap</label>
+        <input type="text" id="namaLengkap">
+
+        <label>Alamat</label>
+        <input type="text" id="alamat">
+
+        <label>Tanggal Lahir</label>
+        <input type="date" id="tanggalLahir">
+
+        <label>Jenis Kelamin</label>
+        <select id="jenisKelamin">
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+
+        <button onclick="simpanData()">Simpan</button>
+        <button onclick="resetForm()">Reset</button>
+
+    </div>
+
+    <h2>Data KTP</h2>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>NIK</th>
+            <th>Nama</th>
+            <th>Alamat</th>
+            <th>Tanggal Lahir</th>
+            <th>Jenis Kelamin</th>
+            <th>Aksi</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="dataKtp"></tbody>
+
+    </table>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
