@@ -16,6 +16,9 @@ public class KtpController {
     public KtpController(KtpService service) {
         this.service = service;
     }
-
+    @PostMapping
+    public KtpDto create(@RequestBody KtpDto dto){
+        return service.create(dto);
+    }
 
 }
