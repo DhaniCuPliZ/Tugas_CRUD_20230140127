@@ -1,15 +1,18 @@
 package com.example.ktpapi.util;
 
-import org.springframework.http.ResponseEntity;
+import com.example.ktpapi.model.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleRuntime(RuntimeException e){
+    public ApiResponse<String> handleError(RuntimeException e){
 
-        return ResponseEntity.badRequest().body(e.getMessage());
-
+        return new ApiResponse<>(
+                false,
+                e.getMessage(),
+                null
+        );
     }
 }

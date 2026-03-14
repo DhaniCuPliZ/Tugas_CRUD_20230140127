@@ -1,6 +1,7 @@
 package com.example.ktpapi.controller;
 
 import com.example.ktpapi.dto.KtpDto;
+import com.example.ktpapi.model.ApiResponse;
 import com.example.ktpapi.service.KtpService;
 
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ktp")
-@CrossOrigin
 public class KtpController {
 
     private final KtpService service;
@@ -19,32 +19,62 @@ public class KtpController {
     }
 
     @PostMapping
-    public KtpDto create(@RequestBody KtpDto dto){
+    public ApiResponse<KtpDto> create(@RequestBody KtpDto dto) {
 
-        return service.create(dto);
+        KtpDto result = service.create(dto);
+
+        return new ApiResponse<>(
+                true,
+                "Data KTP berhasil ditambahkan",
+                result
+        );
     }
 
     @GetMapping
-    public List<KtpDto> getAll(){
+    public ApiResponse<List<KtpDto>> getAll() {
 
-        return service.getAll();
+        List<KtpDto> data = service.getAll();
+
+        return new ApiResponse<>(
+                true,
+                "Data KTP berhasil diambil",
+                data
+        );
     }
 
     @GetMapping("/{id}")
-    public KtpDto getById(@PathVariable Integer id){
+    public ApiResponse<KtpDto> getById(@PathVariable Integer id) {
 
-        return service.getById(id);
+        KtpDto data = service.getById(id);
+
+        return new ApiResponse<>(
+                true,
+                "Data KTP ditemukan",
+                data
+        );
     }
 
     @PutMapping("/{id}")
-    public KtpDto update(@PathVariable Integer id, @RequestBody KtpDto dto){
+    public ApiResponse<KtpDto> update(@PathVariable Integer id, @RequestBody KtpDto dto) {
 
-        return service.update(id, dto);
+        KtpDto data = service.update(id, dto);
+
+        return new ApiResponse<>(
+                true,
+                "Data KTP berhasil diupdate",
+                data
+        );
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id){
+    public ApiResponse<String> delete(@PathVariable Integer id) {
 
         service.delete(id);
+
+        return new ApiResponse<>(
+                true,
+                "Data KTP berhasil dihapus",
+                null
+        );
     }
 }
