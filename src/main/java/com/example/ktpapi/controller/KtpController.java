@@ -31,4 +31,9 @@ public class KtpController {
         return service.findById(id);
     }
 
+    @PutMapping("/{id}")
+    public KtpDto update(@PathVariable Integer id, @RequestBody KtpDto dto){
+        return service.update(id,dto);
+    }
+
 }
