@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="id">
 <head>
-
+    <meta charset="UTF-8">
     <title>CRUD Data KTP</title>
 
     <link rel="stylesheet" href="style.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
 
 </head>
 
@@ -15,60 +15,77 @@
 
 <div class="container">
 
-    <h1>CRUD Data KTP</h1>
+    <h1>📄 Sistem Data KTP</h1>
 
-    <div class="form-box">
+    <div class="card">
 
-        <input type="hidden" id="id">
+        <h2>Tambah / Edit Data</h2>
 
-        <label>Nomor KTP</label>
-        <input type="text" id="nomorKtp">
+        <form id="ktpForm">
 
-        <label>Nama Lengkap</label>
-        <input type="text" id="namaLengkap">
+            <input type="hidden" id="id">
 
-        <label>Alamat</label>
-        <input type="text" id="alamat">
+            <div class="form-group">
+                <label>Nomor KTP</label>
+                <input type="text" id="nomorKtp" required>
+            </div>
 
-        <label>Tanggal Lahir</label>
-        <input type="date" id="tanggalLahir">
+            <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" id="namaLengkap" required>
+            </div>
 
-        <label>Jenis Kelamin</label>
-        <select id="jenisKelamin">
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select>
+            <div class="form-group">
+                <label>Alamat</label>
+                <input type="text" id="alamat" required>
+            </div>
 
-        <button onclick="simpanData()">Simpan</button>
-        <button onclick="resetForm()">Reset</button>
+            <div class="form-group">
+                <label>Tanggal Lahir</label>
+                <input type="date" id="tanggalLahir" required>
+            </div>
+
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <select id="jenisKelamin">
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">💾 Simpan</button>
+            <button type="button" class="btn-cancel" onclick="resetForm()">Batal</button>
+
+        </form>
 
     </div>
 
-    <h2>Data KTP</h2>
 
-    <table>
+    <div class="card table-card">
 
-        <thead>
+        <h2>📋 Daftar Data KTP</h2>
 
-        <tr>
-            <th>ID</th>
-            <th>NIK</th>
-            <th>Nama</th>
-            <th>Alamat</th>
-            <th>Tanggal Lahir</th>
-            <th>Jenis Kelamin</th>
-            <th>Aksi</th>
-        </tr>
+        <table>
 
-        </thead>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nomor KTP</th>
+                <th>Nama</th>
+                <th>Alamat</th>
+                <th>Tanggal Lahir</th>
+                <th>Jenis Kelamin</th>
+                <th>Aksi</th>
+            </tr>
+            </thead>
 
-        <tbody id="dataKtp"></tbody>
+            <tbody id="dataTable"></tbody>
 
-    </table>
+        </table>
+
+    </div>
 
 </div>
-
-<script src="script.js"></script>
 
 </body>
 </html>

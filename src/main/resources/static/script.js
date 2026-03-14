@@ -1,157 +1,176 @@
+const API = "http://localhost:8080/ktp";
+
 $(document).ready(function(){
 
-loadData()
+    loadData();
 
-})
+});
 
 function loadData(){
 
-$.get("/ktp",function(data){
+    $.ajax({
+        url: API,
+        type: "GET",
 
-let html=""
+        success: function(response){
 
-data.forEach(function(item){
+            let rows = "";
 
-html+=`
-<tr>
+            response.data.forEach(function(item){
 
-<td>${item.id}</td>
-<td>${item.nomorKtp}</td>
-<td>${item.namaLengkap}</td>
-<td>${item.alamat}</td>
-<td>${item.tanggalLahir}</td>
-<td>${item.jenisKelamin}</td>
+                rows += `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.nomorKtp}</td>
+                    <td>${item.namaLengkap}</td>
+                    <td>${item.alamat}</td>
+                    <td>${item.tanggalLahir}</td>
+                    <td>${item.jenisKelamin}</td>
+                    <td>
+                        <button onclick="editData(${item.id})">Edit</button>
+                        <button onclick="deleteData(${item.id})">Delete</button>
+                    </td>
+                </tr>
+                `;
 
-<td>
+            });
 
-<button class="btn-edit" onclick="editData(${item.id})">Edit</button>
+            $("#tableData").html(rows);
 
-<button class="btn-delete" onclick="hapusData(${item.id})">Hapus</button>
+        },
 
-</td>
+        error:function(){
+            alert("Gagal mengambil data");
+        }
 
-</tr>
-`
-
-})
-
-$("#dataKtp").html(html)
-
-})
-
-}
-
-function simpanData(){
-
-let id=$("#id").val()
-
-let data={
-
-nomorKtp:$("#nomorKtp").val(),
-namaLengkap:$("#namaLengkap").val(),
-alamat:$("#alamat").val(),
-tanggalLahir:$("#tanggalLahir").val(),
-jenisKelamin:$("#jenisKelamin").val()
+    });
 
 }
 
-if(id==""){
+function saveData(){
 
-$.ajax({
+    let id = $("#id").val();
 
-url:"/ktp",
-type:"POST",
-contentType:"application/json",
-data:JSON.stringify(data),
+    let data = {
+        nomorKtp: $("#nomorKtp").val(),
+        namaLengkap: $("#namaLengkap").val(),
+        alamat: $("#alamat").val(),
+        tanggalLahir: $("#tanggalLahir").val(),
+        jenisKelamin: $("#jenisKelamin").val()
+    };
 
-success:function(){
+    if(id == ""){
 
-alert("Data berhasil ditambahkan")
+        $.ajax({
 
-resetForm()
+            url: API,
+            type: "POST",
+            contentType:"application/json",
+            data: JSON.stringify(data),
 
-loadData()
+            success:function(response){
 
-},
+                alert(response.message);
 
-error:function(err){
+                clearForm();
 
-alert(err.responseText)
+                loadData();
 
-}
+            },
 
-})
+            error:function(){
+                alert("Gagal menambah data");
+            }
 
-}else{
+        });
 
-$.ajax({
+    }else{
 
-url:"/ktp/"+id,
-type:"PUT",
-contentType:"application/json",
-data:JSON.stringify(data),
+        $.ajax({
 
-success:function(){
+            url: API + "/" + id,
+            type:"PUT",
+            contentType:"application/json",
+            data: JSON.stringify(data),
 
-alert("Data berhasil diupdate")
+            success:function(response){
 
-resetForm()
+                alert(response.message);
 
-loadData()
+                clearForm();
 
-}
+                loadData();
 
-})
+            },
 
-}
+            error:function(){
+                alert("Gagal update data");
+            }
+
+        });
+
+    }
 
 }
 
 function editData(id){
 
-$.get("/ktp/"+id,function(data){
+    $.ajax({
 
-$("#id").val(data.id)
-$("#nomorKtp").val(data.nomorKtp)
-$("#namaLengkap").val(data.namaLengkap)
-$("#alamat").val(data.alamat)
-$("#tanggalLahir").val(data.tanggalLahir)
-$("#jenisKelamin").val(data.jenisKelamin)
+        url: API + "/" + id,
+        type:"GET",
 
-})
+        success:function(response){
 
-}
+            let data = response.data;
 
-function hapusData(id){
+            $("#id").val(data.id);
+            $("#nomorKtp").val(data.nomorKtp);
+            $("#namaLengkap").val(data.namaLengkap);
+            $("#alamat").val(data.alamat);
+            $("#tanggalLahir").val(data.tanggalLahir);
+            $("#jenisKelamin").val(data.jenisKelamin);
 
-if(confirm("Yakin ingin menghapus data?")){
+        }
 
-$.ajax({
-
-url:"/ktp/"+id,
-type:"DELETE",
-
-success:function(){
-
-alert("Data berhasil dihapus")
-
-loadData()
+    });
 
 }
 
-})
+function deleteData(id){
+
+    if(confirm("Yakin ingin menghapus data?")){
+
+        $.ajax({
+
+            url: API + "/" + id,
+            type:"DELETE",
+
+            success:function(response){
+
+                alert(response.message);
+
+                loadData();
+
+            },
+
+            error:function(){
+                alert("Gagal menghapus data");
+            }
+
+        });
+
+    }
 
 }
 
-}
+function clearForm(){
 
-function resetForm(){
-
-$("#id").val("")
-$("#nomorKtp").val("")
-$("#namaLengkap").val("")
-$("#alamat").val("")
-$("#tanggalLahir").val("")
-$("#jenisKelamin").val("Laki-laki")
+    $("#id").val("");
+    $("#nomorKtp").val("");
+    $("#namaLengkap").val("");
+    $("#alamat").val("");
+    $("#tanggalLahir").val("");
+    $("#jenisKelamin").val("Laki-laki");
 
 }
